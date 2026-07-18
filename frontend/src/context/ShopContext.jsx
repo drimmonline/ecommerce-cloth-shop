@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react"; // เพิ่ม useEffect ตรงนี้
 import { products } from "../assets/assets.js";
 import { toast } from "react-toastify";
+import {useNavigate } from "react-router-dom";
 
 export const ShopContext = createContext();
 
@@ -11,6 +12,7 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState({}); // แก้จาก constt และย้ายขึ้นมาด้านบน
+    const navigate = useNavigate();
 
     const addToCart = async (itemId, size) => { // เปลี่ยนเป็น itemId (พิมพ์เล็ก) เพื่อให้เหมือนกันทั้งหมด
         if(!size){
@@ -51,6 +53,7 @@ const ShopContextProvider = (props) => {
     }
 
 
+
     const updateQuantity =async (itemId , size , quantity) =>{
         let cartData = structuredClone(cartItems);
         cartData[itemId][size] = quantity;
@@ -59,12 +62,28 @@ const ShopContextProvider = (props) => {
 
 
     }
+    const getCartAmount =  () => {
+        let totalAmount = 0;
+        for(const items in cartItems){
+            let itemInfo = products.find((product) => product._id === items);
+            for(const item in cartItems[items]){
+                try{
+                    if(cartItems[items][item] > 0){
+                        totalAmount += itemInfo.price * cartItems[items][item]
+                    }
+                }catch (error){
+                    console.log('Error',error)
+                }
+            }
+        }
+        return totalAmount;
+    } 
 
     // ย้าย object value มาไว้ด้านล่างสุดหลังจากที่ประกาศตัวแปรทุกตัวครบแล้ว
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart , getCartCount,updateQuantity
+        cartItems, addToCart , getCartCount,updateQuantity,getCartAmount,navigate
     }
 
     return (
