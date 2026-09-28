@@ -10,6 +10,7 @@ const Footer = () => {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis minus asperiores accusamus a cumque veritatis assumenda atque natus nostrum nemo dolorem, molestiae, id ad qui iste fuga eaque, ipsam quia.
             </p>
          </div>
+
          <div>
             <p className='text-xl font-medium mb-5'>COMPONY</p>
             <ul className='flex flex-col gap-1 text-gray-600'>
@@ -19,6 +20,7 @@ const Footer = () => {
                 <li>Privacy policy</li>
             </ul>
          </div>
+         
          <div>
             <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
             <ul className='flex flex-col gap-1 text-gray-600'>
